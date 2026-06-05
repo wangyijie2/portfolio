@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机械结构设计师作品集 | Robotics Mechanical Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --accent-color: #f97316;
+            --bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --gradient-1: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06); padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        nav.scrolled { padding: 10px 0; background: rgba(255, 255, 255, 0.98); box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700;
+            background: var(--gradient-1); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; font-weight: 500;
+            transition: all 0.3s ease; position: relative;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--gradient-1); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding-top: 80px;
+            background: #f8fafc;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none;
+        }
+        .hero-content { text-align: center; z-index: 1; max-width: 900px; }
+        .hero-badge {
+            display: inline-block; padding: 8px 20px; background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.2); border-radius: 50px;
+            font-size: 0.9rem; color: var(--primary-color); margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 4rem; font-weight: 700;
+            margin-bottom: 20px; animation: fadeInUp 0.8s ease 0.1s both;
+        }
+        .hero h1 span {
+            background: var(--gradient-1); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-subtitle { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 40px; animation: fadeInUp 0.8s ease 0.2s both; }
+        .hero-description { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; animation: fadeInUp 0.8s ease 0.3s both; }
+        .hero-cta { display: flex; gap: 20px; justify-content: center; animation: fadeInUp 0.8s ease 0.4s both; }
+
+        .btn {
+            padding: 15px 40px; border-radius: 50px; font-size: 1rem; font-weight: 600;
+            text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none;
+        }
+        .btn-primary {
+            background: var(--gradient-1); color: white;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(37, 99, 235, 0.35); }
+        .btn-secondary { background: transparent; color: var(--text-primary); border: 2px solid rgba(0, 0, 0, 0.15); }
+        .btn-secondary:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
+        a.portfolio-card-link { display: block; text-decoration: none; color: inherit; }
+
+        /* Section Styles */
+        section { padding: 100px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 15px; }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .section-header .highlight { color: var(--primary-color); }
+
+        /* Portfolio Section */
+        .portfolio { background: #eef1f5; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
+
+        .portfolio-card {
+            background: var(--card-bg); border-radius: 20px; overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.06); transition: all 0.4s ease; position: relative;
+        }
+        .portfolio-card:hover { transform: translateY(-10px); border-color: rgba(37, 99, 235, 0.2); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
+        .portfolio-card.future { border-color: rgba(249, 115, 22, 0.15); }
+        .portfolio-card.future:hover { border-color: rgba(249, 115, 22, 0.35); box-shadow: 0 20px 50px rgba(249, 115, 22, 0.12); }
+        .portfolio-image { width: 100%; height: 280px; object-fit: cover; display: block; }
+        .portfolio-content { padding: 25px; }
+        .portfolio-tag {
+            display: inline-block; padding: 5px 15px; background: rgba(37, 99, 235, 0.08);
+            color: var(--primary-color); border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 15px;
+        }
+        .portfolio-card.future .portfolio-tag { background: rgba(249, 115, 22, 0.08); color: var(--accent-color); }
+        .portfolio-content h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-primary); }
+        .portfolio-content p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.7; }
+        .future-badge {
+            position: absolute; top: 20px; right: 20px; padding: 8px 16px;
+            background: var(--gradient-2); border-radius: 20px; font-size: 0.75rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: white;
+        }
+
+        /* Skills Section - Skill Tree */
+        .skills { background: var(--bg); }
+        .skill-tree { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+        .skill-category {
+            background: var(--card-bg); border-radius: 20px; padding: 35px;
+            border: 1px solid rgba(0, 0, 0, 0.06); transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+        .skill-category:hover { border-color: rgba(37, 99, 235, 0.2); transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); }
+        .skill-category-header {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 30px;
+            padding-bottom: 20px; border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .skill-category-icon {
+            width: 55px; height: 55px; border-radius: 14px; display: flex;
+            align-items: center; justify-content: center; font-size: 1.8rem; color: white;
+        }
+        .skill-category-icon.cad { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .skill-category-icon.sim { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+        .skill-category-icon.mech { background: linear-gradient(135deg, #059669, #34d399); }
+        .skill-category-icon.robo { background: linear-gradient(135deg, #0891b2, #22d3ee); }
+        .skill-category-icon.code { background: linear-gradient(135deg, #f97316, #fbbf24); }
+        .skill-category-icon.other { background: linear-gradient(135deg, #64748b, #94a3b8); }
+        .skill-category h3 { font-size: 1.3rem; font-weight: 600; }
+        .skill-items { display: flex; flex-direction: column; gap: 20px; }
+        .skill-item { }
+        .skill-item-name { font-size: 1rem; font-weight: 500; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .skill-stars { color: #f59e0b; font-size: 0.95rem; letter-spacing: 2px; }
+        .skill-stars .empty { color: #d1d5db; }
+        .skill-item-bar {
+            height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden;
+        }
+        .skill-item-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+        .skill-item-fill.cad-fill { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+        .skill-item-fill.sim-fill { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .skill-item-fill.code-fill { background: linear-gradient(90deg, #f97316, #fbbf24); }
+
+        /* About Section */
+        .about { background: #f8fafc; }
+        .about-content { max-width: 900px; margin: 0 auto; }
+        .about-text h2 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 25px; }
+        .about-text h2 span { color: var(--primary-color); }
+        .about-text p { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; }
+
+        /* About Gallery */
+        .about-gallery { margin-top: 60px; }
+        .about-gallery h3 {
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 30px;
+            text-align: center;
+        }
+        .about-gallery h3 span { color: var(--primary-color); }
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .gallery-item {
+            border-radius: 14px; overflow: hidden; position: relative; aspect-ratio: 4/3;
+            cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+        .gallery-item:hover { transform: scale(1.03); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Contact Section */
+        .contact { background: #eef1f5; text-align: center; }
+        .contact-content { max-width: 700px; margin: 0 auto; }
+        .contact h2 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 20px; }
+        .contact-info { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; align-items: center; }
+        .contact-item { display: flex; align-items: center; gap: 15px; color: var(--text-secondary); }
+        .contact-item .contact-icon {
+            width: 50px; height: 50px; background: var(--card-bg); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+            border: 1px solid rgba(0, 0, 0, 0.06); flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .contact-item .contact-text { display: flex; flex-direction: column; gap: 2px; }
+        .contact-item .contact-label { font-size: 0.75rem; color: var(--primary-color); }
+        .contact-item .contact-value { font-size: 0.95rem; color: var(--text-secondary); }
+        .contact-qr { width: 180px; height: 180px; border-radius: 14px; border: 2px solid rgba(0,0,0,0.06); }
+
+        /* Footer */
+        footer { background: #e2e6eb; padding: 40px 0; border-top: 1px solid rgba(0, 0, 0, 0.06); }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; }
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 600;
+            background: var(--gradient-1); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .footer-text { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999;
+            background: rgba(0, 0, 0, 0.92); align-items: center; justify-content: center;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 10px; }
+        .lightbox-close {
+            position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: white;
+            cursor: pointer; z-index: 10000; transition: all 0.3s ease;
+        }
+        .lightbox-close:hover { color: #60a5fa; }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 { font-size: 2.8rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+            .skill-tree { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 576px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .hero-cta { flex-direction: column; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">ROBOTICS MECH</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#portfolio">作品集</a></li>
+                <li><a href="#skills">专业技能</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-grid"></div>
+        <div class="container hero-content">
+            <div class="hero-badge">🤖 机器人结构工程师</div>
+            <h1>打造未来<span>智能机械</span></h1>
+            <p class="hero-subtitle">专注于机器人机械结构设计及仿真</p>
+            <p class="hero-description">
+                我是一名机械结构与力学背景的工程硕士，专注于人形机器人、工业机器人、服务机器人及智能硬件的结构设计与研发。
+                擅长从概念设计到产品落地的全流程开发，为机器人行业提供创新的机械解决方案。
+            </p>
+            <div class="hero-cta">
+                <a href="#portfolio" class="btn btn-primary">查看作品</a>
+                <a href="#contact" class="btn btn-secondary">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>我的<span class="highlight">作品集</span></h2>
+                <p>六大项目展示 — 涵盖机械臂、四足机器人、夹爪、控制器等多个方向</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Project 1: 12自由度四足机器人 -->
+                <a href="project-quadruped.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card">
+                        <img src="12自由度四足机器人设计及运动控制与动力学仿真/结构设计图.png" alt="四足机器人" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag">已完成</span>
+                            <h3>12自由度四足机器人设计及运动控制与动力学仿真</h3>
+                            <p>12-DOF四足机器人完整结构设计与动力学仿真，含步态规划与运动控制验证。</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2: 六轴遥操模仿学习主从机械双臂 -->
+                <a href="project-bipedal-arm.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card">
+                        <img src="六轴遥操模仿学习主从机械双臂/从动臂结构建模.png" alt="六轴遥操机械双臂" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag">已完成</span>
+                            <h3>六轴遥操模仿学习主从机械双臂</h3>
+                            <p>基于模仿学习的遥操作主从机械双臂系统，六轴运动控制实现高精度远程操控。</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 3: 行星滚柱丝杠传动的非结构化五指柔性夹爪及拓扑分析 -->
+                <a href="project-gripper-roller.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card">
+                        <img src="行星滚柱丝杠传动的非结构化五指柔性夹爪及拓扑分析/结构设计图1.png" alt="柔性夹爪" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag">已完成</span>
+                            <h3>行星滚柱丝杠传动的非结构化五指柔性夹爪及拓扑分析</h3>
+                            <p>行星滚柱丝杠驱动的高精度五指柔性夹爪，含拓扑优化分析，兼具高负载与自适应抓取能力。</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 4: 桌面级四轴码垛机械臂 -->
+                <a href="project-palletizing.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card">
+                        <img src="桌面级四轴码垛机械臂设计及静力学与模态分析/机械臂结构设计.png" alt="码垛机械臂" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag">已完成</span>
+                            <h3>桌面级四轴码垛机械臂设计及静力学与模态分析</h3>
+                            <p>四轴工业码垛机械臂的结构设计，含静力学分析与模态分析验证。</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 5: 控制器外壳 -->
+                <a href="project-controller-shell.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card">
+                        <img src="控制器外壳结构设计及稳态热传导分析/控制器钣金外壳结构设计爆炸图.jpg" alt="控制器外壳" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag">已完成</span>
+                            <h3>控制器外壳结构设计及稳态热传导分析</h3>
+                            <p>控制器外壳结构设计与稳态热传导仿真分析，确保散热性能与结构可靠性。</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 6: 更多结构设计 -->
+                <a href="more-designs.html" class="portfolio-card-link fade-in">
+                    <div class="portfolio-card future">
+                        <span class="future-badge">更多设计</span>
+                        <img src="更多结构设计---/同构臂三维建模.png" alt="更多结构设计" class="portfolio-image">
+                        <div class="portfolio-content">
+                            <span class="portfolio-tag" style="background: rgba(255, 107, 53, 0.1); color: var(--accent-color);">作品合集</span>
+                            <h3>更多结构设计</h3>
+                            <p>收录各类机械结构设计作品，涵盖齿轮传动、连杆机构、钣金件等多种结构类型。</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section - Skill Tree -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>专业<span class="highlight">技能树</span></h2>
+                <p>多年积累的技术能力图谱</p>
+            </div>
+
+            <div class="skill-tree">
+                <!-- CAD -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon cad">📐</div>
+                        <h3>CAD 建模</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>SolidWorks</span>
+                                <span class="skill-stars">★★★★★</span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>CATIA</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>AutoCAD</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 仿真 -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon sim">🔧</div>
+                        <h3>仿真分析</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>ANSYS</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill sim-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>Simulation</span>
+                                <span class="skill-stars">★★★★★</span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill sim-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>Adams</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill sim-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 机械知识 -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon mech">⚙️</div>
+                        <h3>机械知识</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>材料特性</span>
+                                <span class="skill-stars">★★★★★</span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>制造工艺</span>
+                                <span class="skill-stars">★★★★★</span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>机械工程图与BOM</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 机器人全栈技能 -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon robo">🤖</div>
+                        <h3>机器人全栈技能</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>运动控制</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>电子电气知识</span>
+                                <span class="skill-stars">★★★<span class="empty">★★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>机器学习与机器视觉</span>
+                                <span class="skill-stars">★★★<span class="empty">★★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 编程 -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon code">💻</div>
+                        <h3>编程开发</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>Python</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill code-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>C++</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill code-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>ROS</span>
+                                <span class="skill-stars">★★★<span class="empty">★★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill code-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他技能 -->
+                <div class="skill-category fade-in">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon other">📋</div>
+                        <h3>其他技能</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>英语（CET-6）</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>动手能力</span>
+                                <span class="skill-stars">★★★★★</span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-item-name">
+                                <span>文档处理与办公</span>
+                                <span class="skill-stars">★★★★<span class="empty">★</span></span>
+                            </div>
+                            <div class="skill-item-bar">
+                                <div class="skill-item-fill cad-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h2>关于<span>我</span></h2>
+                    <p>我叫<strong>王翊杰</strong></p>
+                    <p>
+                        机械工程硕士，专注于机器人机械结构设计、有限元分析与动力学仿真方向。
+                    </p>
+                    <p>
+                        长期关注机器人与智能制造领域，在学习与项目实践过程中持续开展机械结构设计、运动学与动力学分析、有限元仿真等相关工作。
+                    </p>
+                    <p>
+                        熟练使用 SolidWorks、CATIA 进行机械设计，掌握 ANSYS 静力学分析、模态分析以及 Adams 动力学仿真流程，具备从结构方案设计、三维建模到仿真验证的完整开发能力。
+                    </p>
+                    <p>
+                        当前重点研究机器人关节模组、机械臂结构设计及人形机器人相关技术，致力于在机器人结构设计与工程化开发方向持续深耕。
+                    </p>
+                </div>
+            </div>
+
+            <!-- About Photo Gallery -->
+            <div class="about-gallery fade-in">
+                <h3>📷 <span>个人</span>风采</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="关于我/实习期间机器人合影1.jpg" alt="实习期间机器人合影" loading="lazy"></div>
+                    <div class="gallery-item"><img src="关于我/海外留学颁奖仪式.jpg" alt="海外留学颁奖仪式" loading="lazy"></div>
+                    <div class="gallery-item"><img src="关于我/实习期间机器人合影2.png" alt="实习期间机器人合影" loading="lazy"></div>
+                    <div class="gallery-item"><img src="关于我/发明专利证书.jpg" alt="发明专利证书" loading="lazy"></div>
+                    <div class="gallery-item"><img src="关于我/奖学金.jpg" alt="奖学金" loading="lazy"></div>
+                    <div class="gallery-item"><img src="关于我/海外留学证书.jpg" alt="海外留学证书" loading="lazy"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content fade-in">
+                <h2>联系我</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-text">
+                            <div class="contact-label">邮箱</div>
+                            <div class="contact-value">19108471065@163.com</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-text">
+                            <div class="contact-label">手机号</div>
+                            <div class="contact-value">19108471065</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💬</div>
+                        <img class="contact-qr" src="微信二维码.jpg" alt="微信二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">ROBOTICS MECH</div>
+            <div class="footer-text">© 机械结构工程师作品集. </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img src="" alt="预览" id="lightbox-img">
+    </div>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) { nav.classList.add('scrolled'); }
+            else { nav.classList.remove('scrolled'); }
+        });
+
+        // Scroll animation
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+
+        // Lightbox for about gallery
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', function() {
+                lightbox.classList.add('active');
+                lightboxImg.src = this.src;
+                lightboxImg.alt = this.alt;
+            });
+        });
+
+        lightboxClose.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) { lightbox.classList.remove('active'); }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { lightbox.classList.remove('active'); }
+        });
+    </script>
+</body>
+</html>

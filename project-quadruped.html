@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12自由度四足机器人设计及运动控制与动力学仿真 | Robotics Mechanical Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00d4ff; --secondary-color: #7b2cbf; --accent-color: #ff6b35;
+            --dark-bg: #0a0e17; --card-bg: #121a2d; --text-primary: #ffffff; --text-secondary: #a0aec0;
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', sans-serif; background-color: var(--dark-bg); color: var(--text-primary); line-height: 1.6; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 14, 23, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 212, 255, 0.1); padding: 15px 0; }
+        .nav-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease; }
+        .back-btn:hover { color: var(--primary-color); }
+        .hero-section { min-height: 60vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 120px 20px 60px; overflow: hidden; }
+        .hero-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 50% 30%, rgba(0, 212, 255, 0.15) 0%, transparent 60%); pointer-events: none; }
+        .hero-content { max-width: 1400px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-text h1 { font-family: 'Orbitron', sans-serif; font-size: 2.6rem; margin-bottom: 20px; }
+        .hero-text h1 span { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-text .subtitle { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 30px; }
+        .hero-text .description { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; }
+        .hero-image { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); }
+        .hero-image img { width: 100%; height: 400px; object-fit: cover; display: block; }
+        .image-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); }
+        .status-badge { display: inline-block; padding: 8px 20px; background: rgba(0, 212, 255, 0.2); border: 1px solid rgba(0, 212, 255, 0.4); border-radius: 50px; font-size: 0.85rem; color: var(--primary-color); }
+        .content-section { max-width: 1400px; margin: 0 auto; padding: 80px 20px; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 40px; display: flex; align-items: center; gap: 15px; }
+        .section-title::before { content: ''; width: 4px; height: 30px; background: var(--gradient-1); border-radius: 2px; }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .detail-card { background: var(--card-bg); border-radius: 16px; padding: 30px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .detail-card h3 { font-size: 1.2rem; margin-bottom: 15px; color: var(--primary-color); }
+        .detail-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
+        .specs-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .spec-item { background: var(--card-bg); border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .spec-icon { width: 50px; height: 50px; background: var(--gradient-1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .spec-info h4 { font-size: 1rem; margin-bottom: 5px; }
+        .spec-info span { color: var(--text-secondary); font-size: 0.85rem; }
+        .gallery-section { margin-top: 60px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .gallery-item { border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 4/3; cursor: pointer; }
+        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+        .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.1); }
+        .gallery-item .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 15px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); font-size: 0.9rem; z-index: 2; pointer-events: none; }
+        .gallery-item .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 2; pointer-events: none; opacity: 0.85; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .tech-tag { padding: 6px 14px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px; font-size: 0.8rem; color: var(--primary-color); }
+        .lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background: rgba(0, 0, 0, 0.95); align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img, .lightbox video { max-width: 90vw; max-height: 90vh; border-radius: 10px; }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: white; cursor: pointer; z-index: 10000; }
+        .lightbox-close:hover { color: var(--primary-color); }
+        @media (max-width: 968px) { .hero-content { grid-template-columns: 1fr; } .hero-text h1 { font-size: 2rem; } .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 576px) { .hero-text h1 { font-size: 1.6rem; } .gallery-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">ROBOTICS MECH</a>
+            <a href="index.html#portfolio" class="back-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                返回作品集
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="status-badge">✓ 已完成</span>
+                <h1>12自由度<span>四足机器人</span>设计及运动控制与动力学仿真</h1>
+                <p class="subtitle">12-DOF Quadruped Robot — Mechanical Design & Dynamics Simulation</p>
+                <p class="description">
+                    完整的12自由度四足机器人结构设计，涵盖腿部运动学分析、步态规划、
+                    运动控制验证及动力学仿真。每条腿3个自由度，实现稳定的动态行走能力。
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">四足机器人</span><span class="tech-tag">运动学</span>
+                    <span class="tech-tag">步态规划</span><span class="tech-tag">动力学仿真</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="12自由度四足机器人设计及运动控制与动力学仿真/结构设计图.png" alt="四足机器人">
+                <div class="image-overlay"><span class="status-badge">已完成项目</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2 class="section-title">项目概述</h2>
+        <div class="details-grid">
+            <div class="detail-card">
+                <h3>项目背景</h3>
+                <p>设计一款仿生四足机器人，每条腿为三自由度结构，能够在复杂地形上实现稳定行走与动态平衡控制。</p>
+            </div>
+            <div class="detail-card">
+                <h3>技术挑战</h3>
+                <p>12自由度的运动协调控制、步态规划与切换、动力学模型精确度、结构轻量化与刚性平衡。</p>
+            </div>
+            <div class="detail-card">
+                <h3>解决方案</h3>
+                <p>采用D-H参数法建立运动学模型，结合Adams进行动力学仿真验证，通过优化腿部连杆结构实现轻量化与高刚性兼顾。</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">技术规格</h2>
+        <div class="specs-list">
+            <div class="spec-item"><div class="spec-icon">🦿</div><div class="spec-info"><h4>总自由度</h4><span>12-DOF</span></div></div>
+            <div class="spec-item"><div class="spec-icon">📐</div><div class="spec-info"><h4>单腿构型</h4><span>3-DOF串联</span></div></div>
+            <div class="spec-item"><div class="spec-icon">🏃</div><div class="spec-info"><h4>步态类型</h4><span>Trot/Walk</span></div></div>
+            <div class="spec-item"><div class="spec-icon">🔬</div><div class="spec-info"><h4>仿真平台</h4><span>Adams + MATLAB</span></div></div>
+        </div>
+
+        <div class="gallery-section">
+            <h2 class="section-title">图片与视频</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-type="image">
+                    <img src="12自由度四足机器人设计及运动控制与动力学仿真/结构设计图.png" alt="整体结构">
+                    <div class="overlay">整体结构设计</div>
+                </div>
+                <div class="gallery-item" data-type="image">
+                    <img src="12自由度四足机器人设计及运动控制与动力学仿真/实物落地图.png" alt="实物落地">
+                    <div class="overlay">实物落地</div>
+                </div>
+                <div class="gallery-item" data-type="video">
+                    <video src="12自由度四足机器人设计及运动控制与动力学仿真/adams动力学仿真.mp4" muted loop playsinline></video>
+                    <div class="play-icon">▶</div>
+                    <div class="overlay">Adams动力学仿真</div>
+                </div>
+                <div class="gallery-item" data-type="image">
+                    <img src="12自由度四足机器人设计及运动控制与动力学仿真/步态规划足端轨迹图.png" alt="步态规划">
+                    <div class="overlay">步态规划与足端轨迹</div>
+                </div>
+                <div class="gallery-item" data-type="image">
+                    <img src="12自由度四足机器人设计及运动控制与动力学仿真/关节力矩仿真图.png" alt="关节力矩">
+                    <div class="overlay">关节力矩仿真分析</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <div id="lightbox-content"></div>
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const lightboxClose = document.getElementById('lightbox-close');
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const type = this.dataset.type;
+                lightboxContent.innerHTML = '';
+                if (type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = this.querySelector('img').src;
+                    img.alt = this.querySelector('.overlay').textContent;
+                    lightboxContent.appendChild(img);
+                } else if (type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = this.querySelector('video').src;
+                    video.controls = true;
+                    video.autoplay = true;
+                    lightboxContent.appendChild(video);
+                }
+                lightbox.classList.add('active');
+            });
+        });
+        lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('active'); });
+    </script>
+</body>
+</html>
