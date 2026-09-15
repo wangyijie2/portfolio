@@ -8,7 +8,14 @@ const path=location.pathname.split('/').pop();
 const isAbout=path==='about.html';
 $('#header').innerHTML=`<nav class="nav wrap" aria-label="主导航"><a class="brand" href="index.html"><span class="brand-mark">W.</span><span>王翊杰<small>YIJIE WANG</small></span></a><div class="nav-links"><a href="index.html#projects" ${!isAbout?'class="active"':''}>作品集</a><a href="index.html#about" ${isAbout?'class="active"':''}>关于我</a><a class="nav-cta" href="#contact">联系我 <span aria-hidden="true">↗</span></a></div></nav>`;
 $('#footer').innerHTML=`<section class="contact" id="contact"><div class="wrap contact-row"><div><h2>联系我</h2><p>求职方向：机器人结构设计 · 关节模组 · 末端执行器 · 仿真分析</p><address>19108471065 · 19108471065@163.com</address></div><div class="contact-actions"><a class="button" href="mailto:19108471065@163.com">邮件联系 <span class="arrow">↗</span></a><button class="button secondary" data-wechat>微信联系</button><a class="button secondary" href="assets/resume.pdf" target="_blank" rel="noopener">查看简历 ↓</a></div></div></section><div class="wrap footer-bottom"><span>© 2026 王翊杰 · 机器人结构设计作品集</span><a href="https://github.com/wangyijie2" target="_blank" rel="noopener">GITHUB ↗</a></div>`;
-const card=p=>`<a class="project-card" href="project.html?id=${p.id}"><div class="card-visual">${photo(p.cover)}<div class="card-heading"><span class="project-kind">${p.tag}</span><h3>${p.title}</h3></div><span class="card-arrow" aria-hidden="true">↗</span></div><div class="card-info"><p>${p.subtitle}</p></div></a>`;
+const card=p=>{
+ const heading=`<div class="card-heading"><span class="project-kind">${p.tag}</span><h3>${p.title}</h3></div>`;
+ if(p.id==='easyhand'){
+  const clips=[2,1,3].map(id=>M.videos.find(v=>v.id===id));
+  return `<article class="project-card hand-card"><div class="card-visual"><a class="hand-title-link" href="project.html?id=${p.id}">${heading}</a><div class="hand-video-row">${clips.map((v,i)=>`<figure>${video(v)}<figcaption>${['塑料杯抓取','手势与舞蹈展示','纸包抓取'][i]}</figcaption></figure>`).join('')}</div></div><div class="card-info"><p>${p.subtitle}</p><a class="text-link" href="project.html?id=${p.id}">查看项目详情 ↗</a></div></article>`;
+ }
+ return `<a class="project-card" href="project.html?id=${p.id}"><div class="card-visual">${photo(p.cover)}${heading}<span class="card-arrow" aria-hidden="true">↗</span></div><div class="card-info"><p>${p.subtitle}</p></div></a>`;
+};
 const gallery=ids=>`<div class="gallery">${ids.map(id=>`<figure>${zoom(id)}<figcaption>${img(id).label}</figcaption></figure>`).join('')}</div>`;
 const vidGallery=vs=>`<div class="video-gallery">${vs.map(v=>`<figure>${video(v)}<figcaption>${v.label}</figcaption></figure>`).join('')}</div>`;
 function home(){
