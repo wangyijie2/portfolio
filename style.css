@@ -19,3 +19,6 @@ body{background:#f7f9fc}.hero{padding:48px 0 50px;gap:50px}.hero-media{height:48
 @media(max-width:650px){.about-main{display:flex;flex-direction:column;gap:30px;padding-bottom:35px}.about-intro>div:first-child,.about-sidebar,.about-columns{width:100%;min-width:0}.about-columns{padding:0}.sidebar-records .cert-grid button{height:210px}}
 
 .about-sidebar .photo-collage{align-items:center}.about-sidebar .photo-collage button,.about-sidebar .photo-collage button:first-child{height:auto;background:transparent}.about-sidebar .photo-collage button img{display:block;width:100%;height:auto;object-fit:contain;object-position:center}
+
+.about-sidebar .photo-collage{grid-template-columns:1fr 1fr;align-items:center}.about-sidebar .photo-collage button:first-child{grid-column:1 / -1}.sidebar-records .cert-grid figure:first-child{grid-column:1 / -1}.sidebar-records .cert-grid figure:first-child button{height:auto;padding:0}.sidebar-records .cert-grid figure:first-child img{display:block;width:100%;height:auto;object-fit:contain}
+.about-main{grid-template-rows:auto 1fr}
