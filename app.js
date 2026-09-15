@@ -12,7 +12,7 @@ const card=p=>{
  const heading=`<div class="card-heading"><span class="project-kind">${p.tag}</span><h3>${p.title}</h3></div>`;
  if(p.id==='easyhand'){
   const clips=[2,1,3].map(id=>M.videos.find(v=>v.id===id));
-  return `<article class="project-card hand-card"><div class="card-visual"><a class="hand-title-link" href="project.html?id=${p.id}">${heading}</a><div class="hand-video-row">${clips.map((v,i)=>`<figure>${video(v)}<figcaption>${['塑料杯抓取','手势与舞蹈展示','纸包抓取'][i]}</figcaption></figure>`).join('')}</div></div><div class="card-info"><p>${p.subtitle}</p><a class="text-link" href="project.html?id=${p.id}">查看项目详情 ↗</a></div></article>`;
+  return `<article class="project-card hand-card"><div class="card-visual"><div class="hand-cover-header"><a class="hand-title-link" href="project.html?id=${p.id}">${heading}</a><a class="button hand-details" href="project.html?id=${p.id}">查看项目详情 ↗</a></div><div class="hand-video-row">${clips.map((v,i)=>`<figure>${video(v)}<figcaption>${['塑料杯抓取','手势与舞蹈展示','纸包抓取'][i]}</figcaption></figure>`).join('')}</div></div><div class="card-info"><p>${p.subtitle}</p><a class="text-link" href="project.html?id=${p.id}">查看项目详情 ↗</a></div></article>`;
  }
  return `<a class="project-card" href="project.html?id=${p.id}"><div class="card-visual">${photo(p.cover)}${heading}<span class="card-arrow" aria-hidden="true">↗</span></div><div class="card-info"><p>${p.subtitle}</p></div></a>`;
 };
