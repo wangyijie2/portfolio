@@ -123,7 +123,7 @@ window.PROJECTS=[
     "id": "quadruped",
     "no": "03",
     "title": "12自由度四足机器人",
-    "subtitle": "机器人设计实践 · 结构与动力学仿真",
+    "subtitle": "马来西亚沙巴大学实践项目 · 结构与动力学仿真",
     "type": "机器人本体",
     "cover": 4,
     "hero": 3,
@@ -341,3 +341,7 @@ window.PROJECTS=[
   }
 ];
 window.EXTRAS=[{title:'控制器外壳与散热结构',desc:'独立完成的企业结构设计项目，包含钣金外壳、元器件布局及散热结构实践。',images:[30,31,29,25,28,26,27]},{title:'桌面级四轴机械臂',desc:'个人设计实践，记录结构建模、实物装配及静力学与模态分析。',images:[47,46,43,44,45,42,41,48]},{title:'其他结构设计与仿真',cover:36,desc:'末端执行器、同构臂、URDF模型及结构分析实践。',images:[33,32,36,35,34,37,38,39,40]}];
+
+// Keep project numbering and navigation aligned with the homepage.
+window.PROJECTS.sort((a,b)=>["easyhand","charging","quadruped","folding-leg","soft-gripper","soarm101"].indexOf(a.id)-["easyhand","charging","quadruped","folding-leg","soft-gripper","soarm101"].indexOf(b.id));
+window.PROJECTS.forEach((p,i)=>p.no=String(i+1).padStart(2,"0"));
