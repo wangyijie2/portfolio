@@ -77,3 +77,6 @@ body{background:#f7f9fc}.hero{padding:48px 0 50px;gap:50px}.hero-media{height:48
 /* Internship photos: four balanced tiles. */
 .about-sidebar .photo-collage button:first-child{grid-column:auto}
 .about-sidebar .photo-collage{align-items:center}
+
+.metrics.metrics-four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:650px){.metrics.metrics-four{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:20px}.metrics-four div:nth-child(2){border-right:0}.metrics-four div:nth-child(3){padding-left:0}}
