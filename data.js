@@ -8,7 +8,7 @@ window.PROJECTS=[
     "cover": 11,
     "hero": 10,
     "tag": "已投产 10 台",
-    "date": "2026.07—2026.09",
+    "date": "2026.06—2026.07",
     "role": "独立完成结构设计",
     "tools": [
       "Creo",

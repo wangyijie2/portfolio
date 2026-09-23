@@ -73,3 +73,7 @@ body{background:#f7f9fc}.hero{padding:48px 0 50px;gap:50px}.hero-media{height:48
 @media(max-width:650px){.process{grid-template-columns:1fr;gap:24px}.process h3{font-size:20px}.process p,.project-heading>p,.extra-detail>p{font-size:16px;line-height:1.9}}
 .project-grid .card-heading .project-kind{font-size:15px;font-weight:600;line-height:1.6;margin-bottom:6px}
 @media(max-width:650px){.project-grid .card-heading .project-kind{font-size:13px}}
+
+/* Internship photos: four balanced tiles. */
+.about-sidebar .photo-collage button:first-child{grid-column:auto}
+.about-sidebar .photo-collage{align-items:center}
