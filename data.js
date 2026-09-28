@@ -5,8 +5,8 @@ window.PROJECTS=[
     "title": "双电池充电仓",
     "subtitle": "人形机器人配套设备 · 独立设计与投产",
     "type": "产品结构",
-    "cover": 11,
-    "hero": 10,
+    "cover": 56,
+    "hero": 56,
     "tag": "已投产 10 台",
     "date": "2026.06—2026.07",
     "role": "独立完成结构设计",
@@ -50,6 +50,8 @@ window.PROJECTS=[
       ]
     ],
     "gallery": [
+      56,
+      57,
       10,
       11
     ],
